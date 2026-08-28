@@ -14,7 +14,7 @@
 </div>
 
 <div class="bg-white rounded-xl border overflow-x-auto">
-    <table class="w-full text-sm min-w-[720px]">
+    <table class="w-full text-sm min-w-[860px]">
         <thead>
             <tr class="text-left text-gray-500 border-b bg-gray-50">
                 <th class="p-3">รายการ</th>
@@ -24,6 +24,7 @@
                 <th class="p-3 text-right">คงเหลือ</th>
                 <th class="p-3">คงเหลือ %</th>
                 <th class="p-3">ผู้เช็คล่าสุด</th>
+                <th class="p-3 text-center">บันทึกการใช้</th>
                 <th class="p-3"></th>
             </tr>
         </thead>
@@ -59,6 +60,19 @@
                             <div class="text-xs text-gray-400">{{ $item->checked_at->format('d/m/Y') }}</div>
                         @endif
                     </td>
+                    <td class="p-3">
+                        <form action="{{ route('stock-items.use', $item) }}" method="POST"
+                              class="flex items-center justify-center gap-1">
+                            @csrf
+                            <input type="number" step="0.01" min="0.01" name="use_qty"
+                                   placeholder="จำนวน" required
+                                   class="w-20 rounded-lg border-gray-300 text-xs px-2 py-1.5">
+                            <button type="submit"
+                                    class="bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap">
+                                ใช้
+                            </button>
+                        </form>
+                    </td>
                     <td class="p-3 text-right space-x-2 whitespace-nowrap">
                         <a href="{{ route('stock-items.edit', $item) }}" class="text-blue-600">แก้ไข</a>
                         <form action="{{ route('stock-items.destroy', $item) }}" method="POST" class="inline"
@@ -71,7 +85,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="p-8 text-center text-gray-400">ยังไม่มีรายการ เริ่มเพิ่มรายการแรกได้เลย</td>
+                    <td colspan="9" class="p-8 text-center text-gray-400">ยังไม่มีรายการ เริ่มเพิ่มรายการแรกได้เลย</td>
                 </tr>
             @endforelse
         </tbody>
