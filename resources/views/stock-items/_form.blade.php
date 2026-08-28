@@ -27,9 +27,12 @@
     </div>
 
     <div>
-        <label class="block text-sm text-gray-600 mb-1">จำนวนที่ใช้ไปแล้ว <span class="text-red-500">*</span></label>
+        <label class="block text-sm text-gray-600 mb-1">ยอดใช้สะสมทั้งหมด <span class="text-red-500">*</span></label>
         <input type="number" step="0.01" min="0" name="used_qty" value="{{ old('used_qty', $stockItem->used_qty ?? 0) }}"
                required class="w-full rounded-lg border-gray-300 text-sm">
+        @if (isset($stockItem))
+            <p class="text-xs text-gray-400 mt-1">ปกติไม่ต้องแก้ตรงนี้ ใช้ช่อง "บันทึกการใช้" ด้านบนแทน — แก้เฉพาะกรณีพิมพ์ผิด/ต้องการตั้งยอดใหม่</p>
+        @endif
         @error('used_qty') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
     </div>
 
@@ -46,14 +49,6 @@
                class="w-full rounded-lg border-gray-300 text-sm">
     </div>
 </div>
-
-@if (isset($stockItem))
-    <div class="mt-4 p-3 rounded-lg bg-gray-50 text-sm text-gray-600">
-        คงเหลือปัจจุบัน:
-        <span class="font-medium text-gray-800">{{ number_format($stockItem->remaining_qty, 2) }}</span>
-        ({{ $stockItem->remaining_percent }}%)
-    </div>
-@endif
 
 <div class="mt-6 flex gap-3">
     <button type="submit" class="bg-slate-900 text-white text-sm px-5 py-2 rounded-lg">บันทึก</button>
