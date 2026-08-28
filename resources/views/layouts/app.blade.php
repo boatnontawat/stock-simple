@@ -25,6 +25,14 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg bg-red-50 text-red-700 px-4 py-3 text-sm">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+
         @yield('content')
     </main>
 </body>
